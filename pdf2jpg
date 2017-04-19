@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+  # no specific file, process all
+  for pdf in *.pdf; do
+    folder=$(basename "$pdf" .pdf)
+    mkdir -p "/dest/$folder" && \
+    gs -o "/dest/$folder/%02d.jpg" -sDEVICE=jpeg -dJEPG=100 -r300 "$pdf" && \
+    mogrify -resize 1800 -quality 60 -verbose "/dest/$folder/*.jpg"
+  done
+else
+  # process only the specific file
+  folder=$(basename "$1" .pdf)
+  mkdir -p "/dest/$folder" && \
+  gs -o "/dest/$folder/%02d.jpg" -sDEVICE=jpeg -dJEPG=100 -r300 "$1" && \
+  mogrify -resize 1800 -quality 60 -verbose "/dest/$folder/*.jpg"
+fi
