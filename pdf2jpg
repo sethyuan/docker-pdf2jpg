@@ -9,7 +9,7 @@ if [ -z "$1" ]; then
     mogrify -resize 1800 -quality 60 -verbose "/dest/$folder/*.jpg"
   done
 else
-  # process only the specific file
+  # process only the specified file
   folder=$(basename "$1" .pdf)
   mkdir -p "/dest/$folder" && \
   gs -o "/dest/$folder/%02d.jpg" -sDEVICE=jpeg -dJEPG=100 -r300 "$1" && \
